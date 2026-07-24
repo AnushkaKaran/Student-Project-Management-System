@@ -1,0 +1,81 @@
+CREATE DATABASE IF NOT EXISTS spms;
+USE spms;
+
+CREATE TABLE IF NOT EXISTS AcademicYear (
+    YearID INT AUTO_INCREMENT PRIMARY KEY,
+    YearName VARCHAR(50) NOT NULL,
+    IsActive BOOLEAN DEFAULT TRUE
+);
+
+CREATE TABLE IF NOT EXISTS ProjectType (
+    ProjectTypeID INT AUTO_INCREMENT PRIMARY KEY,
+    ProjectTypeName VARCHAR(100) NOT NULL,
+    Description TEXT
+);
+
+CREATE TABLE IF NOT EXISTS Staff (
+    StaffID INT AUTO_INCREMENT PRIMARY KEY,
+    StaffName VARCHAR(100) NOT NULL,
+    Email VARCHAR(100) UNIQUE NOT NULL,
+    Password VARCHAR(255) NOT NULL,
+    Role ENUM('Admin', 'Faculty') DEFAULT 'Faculty',
+    Phone VARCHAR(20),
+    Description TEXT,
+    Created DATETIME DEFAULT CURRENT_TIMESTAMP,
+    Modified DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS Student (
+    StudentID INT AUTO_INCREMENT PRIMARY KEY,
+    StudentName VARCHAR(100) NOT NULL,
+    Email VARCHAR(100) UNIQUE NOT NULL,
+    RollNo VARCHAR(50) NOT NULL,
+    Password VARCHAR(255) NOT NULL,
+    Phone VARCHAR(20),
+    Created DATETIME DEFAULT CURRENT_TIMESTAMP,
+    Modified DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS ProjectGroup (
+    ProjectGroupID INT AUTO_INCREMENT PRIMARY KEY,
+    ProjectGroupName VARCHAR(100) NOT NULL,
+    ProjectTypeID INT,
+    GuideStaffID INT,
+    ProjectTitle VARCHAR(200),
+    Status ENUM('Proposed', 'Approved', 'Rejected') DEFAULT 'Proposed',
+    Created DATETIME DEFAULT CURRENT_TIMESTAMP,
+    Modified DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (ProjectTypeID) REFERENCES ProjectType(ProjectTypeID),
+    FOREIGN KEY (GuideStaffID) REFERENCES Staff(StaffID)
+);
+
+CREATE TABLE IF NOT EXISTS ProjectGroupMember (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    ProjectGroupID INT,
+    StudentID INT,
+    IsLeader BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (ProjectGroupID) REFERENCES ProjectGroup(ProjectGroupID) ON DELETE CASCADE,
+    FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
+);
+
+CREATE TABLE IF NOT EXISTS ProjectMeeting (
+    ProjectMeetingID INT AUTO_INCREMENT PRIMARY KEY,
+    ProjectGroupID INT,
+    GuideStaffID INT,
+    MeetingDateTime DATETIME,
+    Status VARCHAR(50) DEFAULT 'Scheduled',
+    FOREIGN KEY (ProjectGroupID) REFERENCES ProjectGroup(ProjectGroupID),
+    FOREIGN KEY (GuideStaffID) REFERENCES Staff(StaffID)
+);
+
+CREATE TABLE IF NOT EXISTS ProjectMeetingAttendance (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    ProjectMeetingID INT,
+    StudentID INT,
+    IsPresent BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (ProjectMeetingID) REFERENCES ProjectMeeting(ProjectMeetingID) ON DELETE CASCADE,
+    FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
+);
+
+-- Seed Data
+INSERT INTO AcademicYear (YearName, IsActive) VALUES ('2025-2026', TRUE) ON DUPLICATE KEY UPDATE YearName=YearName;

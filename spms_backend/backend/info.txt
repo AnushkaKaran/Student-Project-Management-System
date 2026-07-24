@@ -1,0 +1,266 @@
+- Queries in models.
+- Logic in services.
+- Endpoints in routes.
+- Middleware applied in routes.
+
+//controller: request & response handler "What came and what to send?"
+
+- express -> to build your backend routes (/api/staff, /api/student, etc.).
+- mysql2 -> to connect Node.js with your MySQL database (ProjectDB).
+- jsonwebtoken -> to generate and verify JWT tokens for login/authentication.
+- cors -> allows frontend (React, etc.) to talk to backend without errors.
+
+
+Flow is:
+Route file
+   ↓
+Service file
+   ↓
+Model file
+   ↓
+db/mysql.js  ← connection used here
+   ↓
+MySQL Database
+
+
+>>> async await: Means this function will run asynchronously because database query takes time
+So instead of blocking the server: NodeJS sends query, waits in background continues other work.
+
+
+
+db(folder),mysql.js(file):
+-> mysql2 is imported with promise because in promise we can use async await, it is easy to understand and modern.
+If we don't import promise then we have to write like this :- db.query(query , (err,result)=>{})
+(as it is based on callback)
+
+-> createpool:- connection pool. If we don't use pool then everytime node will create a new DB connection
+then Run Query then close connection. This is slow and wastes memory. So instead we use pool.
+Pool means create few connections and reuse then again & again
+
+-> user:"root" here root is default mysql username.
+
+-> connectionLimit: Max number of DB connections Pool can create at a time 
+for example : limit is 10, users send 20 api requests together then 10 requests run immediately and 10 wait in queue.
+As soon as the connection is free next requests runs.
+if limit is 1000 then mysql tries to opn many connections,RAM usage increase and CPU load increases.DB may crash.
+
+
+
+models(folder)
+-> await db.query(): It uses mysql connection from pool.
+-> [data] = rows
+-> getByID: return data[0]:- data = [{row}] we want only one record so returns first element.
+-> NOW(): for current date and time.
+
+Que. Why we use formData in insert/update instead of multiple parameters
+-> In backend insert and update functions we use only one parameter
+called formData instead of multiple parameters.
+
+Example:
+
+async function insert(formData)
+
+Here formData is an OBJECT which contains all the values
+sent from frontend inside req.body.
+
+When frontend sends POST request, it sends data in JSON format like:
+
+{
+  "ProjectGroupName": "AI Innovators",
+  "ProjectTypeID": 1,
+  "GuideStaffName": "Dr. Mehta",
+  "ProjectTitle": "AI Chatbot",
+  "ProjectArea": "Artificial Intelligence",
+  "ProjectDescription": "Smart chatbot system",
+  "AverageCPI": 8.5,
+  "ConvenerStaffID": 2,
+  "ExpertStaffID": 3,
+  "Description": "Final year project"
+}
+
+This complete JSON object is received in backend as:
+
+req.body
+
+Service sends this req.body to model as:
+
+model.insert(req.body)
+
+So in model:
+
+formData = req.body
+
+Now formData becomes an object like:
+
+formData.ProjectGroupName
+formData.ProjectTypeID
+formData.ProjectTitle
+etc.
+
+So instead of writing:
+
+insert(name, typeId, guideName, title, area, description, cpi, convenerId, expertId)
+
+We simply write:
+
+insert(formData)
+
+Advantages of using formData:
+
+1. Easy to manage large number of fields.
+2. No need to pass multiple parameters.
+3. Dynamic handling of insert and update.
+4. Clean and readable code.
+5. Matches directly with frontend JSON data.
+6. Useful for PATCH (partial update).
+
+In SQL query we access values like:
+
+'${formData.ProjectGroupName}'
+'${formData.ProjectTypeID}'
+etc.
+
+So formData is nothing but a container (object)
+which holds all form values sent from frontend.
+
+
+IFNULL() [mysql built-in function]
+-> IFNULL(value1,value2): If value is NOT NULL then use value1. If it is NULL use value2
+for example: ProjectGroupName =
+IFNULL(
+  ${formData.ProjectGroupName ? `'${formData.ProjectGroupName}'` : null},
+  ProjectGroupName
+),
+formData.ProjectGroupName ? :- checks if frontend has sent this field or not.If the value is sent for example
+IFNULL('Veloura',ProjectGroupName), since veloura is not null database updates. If value is not sent like this
+formData.ProjectGroupName = undefined then IFNULL(NULL,ProjectGroupName), so now first value is NULL so it will keep the OLD ProjectGroupName(no updates)
+${} :- Run JavaScript code inside string.
+
+-> For numeric fields :- IFNULL(${formData.ProjectTypeID ?? null}, ProjectTypeID)
+In IFNULL() function, string values must be enclosed in single quotes (' ') 
+while numeric values must not be enclosed in quotes. Using quotes with numeric 
+foreign key columns may lead to constraint errors during update operations.
+
+
+
+services(folder)
+-> async function getAllProjectGroups():- this function will be called from route file when Thunderclient hits(GET  /api/project-groups)
+-> const data = await getAll():- This will call model's getAll()
+
+
+/api/staff/login
+-> const token = jwt.sign(  //this creates JWT token
+
+   //Payload = data stored inside token
+    {
+      StaffID: data.StaffID,
+      StaffName: data.StaffName,
+      Email: data.Email,
+    },
+
+
+   // secret key = used to encrypt token
+    SECRET_KEY,
+    { expiresIn: "1h" },
+  );
+
+
+
+routes(folder)
+->Why Router is Used in Express?
+
+In Express.js, Router is used to divide and manage different API routes of the project into separate files.
+
+If we do not use Router, then we have to write all API routes like:
+
+app.get()
+app.post()
+app.patch()
+app.delete()
+
+inside a single file called index.js.
+
+In a large project like SPMS, we have many modules such as:
+
+Student
+Staff
+Project Group
+Project Meeting
+Project Type
+Attendance
+
+Each module contains multiple APIs like:
+
+Get All
+Get By ID
+Insert
+Update
+Delete
+
+So, if we write all these APIs in index.js, the file will become very large, complex, and difficult to read, understand, and maintain.
+
+To solve this problem, Express provides Router.
+
+Router allows us to create separate route files for each module such as:
+
+student.route.js
+staff.route.js
+projectGroup.route.js
+projectMeeting.route.js
+
+This helps in organizing the project in a structured way.
+
+Now, index.js becomes clean because it only connects these route files using: app.use()
+
+Therefore, Router helps in:
+Better code organization
+Easy debugging
+Improved readability
+Proper separation of modules
+Maintainable project structure
+
+
+
+middleware(folder)
+-> jwt.sign() used to create token
+-> jwt.verify() used to verify token
+-> next: pass control to next function. If tioken is valid middleware allow request to move forward. without next() request will stop here.
+
+-> const token = authHeader.split(" ")[1]; it extracts the token part 
+(Bearer Token)
+[0]   Bearer
+[1]   Actual token
+
+-> Auth Middleware is used to protect APIs by verifying the JWT token sent in the
+Authorization header. It checks whether the token is valid or expired and
+allows access to the route using next() if the token is correct.
+
+
+
+
+res: full response
+res.data: actual response body
+res.data.data: data inside your response body
+
+
+
+
+const handleDelete = async (id) => {
+    if (!window.confirm("Delete this project type?")) return;
+    try {
+      await axios.delete(`http://localhost:3000/api/master/project-types/${id}`, { headers });
+      setProjectTypes(projectTypes.filter(pt => pt.ProjectTypeID !== id)); //This removes deleted item from UI without reloading page
+    } catch (err) {
+      console.error("Delete error:", err);
+    }
+  };
+
+
+  setProjectTypes(projectTypes.filter(pt => pt.ProjectTypeID !== id)); 
+  //This removes deleted item from UI without reloading page. Keep all items except the one with matching ID
+
+
+  Axios = a library used to make HTTP requests (API calls)
+  axios returns res contains
+  axois.get(url,{headers}) //Token(JWT), Authentication
+  gives better error handling than fetch and also syntax is easier.

@@ -1,0 +1,304 @@
+/* ============================================
+   SPMS Student Dashboard — Scoped Styles
+   Prefix: spms-sdash
+   ============================================ */
+
+.spms-sdash {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---- Welcome Header ---- */
+.spms-sdash__welcome {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  border-radius: 16px;
+  padding: 32px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.spms-sdash__welcome::after {
+  content: '';
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 200px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+}
+
+.spms-sdash__welcome-text h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.02em;
+}
+
+.spms-sdash__welcome-text p {
+  font-size: 1rem;
+  margin: 0;
+  opacity: 0.9;
+  max-width: 500px;
+  line-height: 1.5;
+}
+
+/* ---- Top Stats Grid ---- */
+.spms-sdash__stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.spms-sdash__stat-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  transition: transform 0.2s ease;
+}
+
+.spms-sdash__stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.spms-sdash__stat-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.spms-sdash__stat-icon--blue { background: #e0e7ff; color: #4f46e5; }
+.spms-sdash__stat-icon--green { background: #dcfce7; color: #16a34a; }
+.spms-sdash__stat-icon--purple { background: #fae8ff; color: #c026d3; }
+.spms-sdash__stat-icon--orange { background: #ffedd5; color: #ea580c; }
+
+.spms-sdash__stat-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.spms-sdash__stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+  line-height: 1;
+}
+
+.spms-sdash__stat-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #64748b;
+  margin: 0;
+}
+
+/* ---- Main Content Grid ---- */
+.spms-sdash__main-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 1024px) {
+  .spms-sdash__main-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- Panel Cards ---- */
+.spms-sdash__panel {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  display: flex;
+  flex-direction: column;
+}
+
+.spms-sdash__panel-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.spms-sdash__panel-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.spms-sdash__panel-body {
+  padding: 24px;
+  flex-grow: 1;
+}
+
+/* ---- My Group Section ---- */
+.spms-sdash__group-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.spms-sdash__group-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #4f46e5;
+  margin: 0;
+}
+
+.spms-sdash__group-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.spms-sdash__meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  color: #475569;
+  background: #f8fafc;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+}
+
+.spms-sdash__members-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.spms-sdash__member-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #334155;
+}
+
+.spms-sdash__member-chip--leader {
+  border-color: #f59e0b;
+  background: #fef3c7;
+  color: #b45309;
+}
+
+/* ---- Timeline / Tasks ---- */
+.spms-sdash__timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.spms-sdash__timeline-item {
+  display: flex;
+  gap: 16px;
+}
+
+.spms-sdash__timeline-time {
+  min-width: 70px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #64748b;
+  text-align: right;
+  padding-top: 2px;
+}
+
+.spms-sdash__timeline-content {
+  flex-grow: 1;
+  padding-bottom: 16px;
+  border-left: 2px solid #e2e8f0;
+  padding-left: 16px;
+  position: relative;
+}
+
+.spms-sdash__timeline-item:last-child .spms-sdash__timeline-content {
+  border-left-color: transparent;
+  padding-bottom: 0;
+}
+
+.spms-sdash__timeline-content::before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 4px;
+  width: 10px;
+  height: 10px;
+  background: #cbd5e1;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+}
+
+.spms-sdash__timeline-item--active .spms-sdash__timeline-content::before {
+  background: #4f46e5;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}
+
+.spms-sdash__timeline-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0 0 4px 0;
+}
+
+.spms-sdash__timeline-desc {
+  font-size: 0.8125rem;
+  color: #64748b;
+  margin: 0;
+}
+
+/* ---- Chart Container ---- */
+.spms-sdash__chart-container {
+  height: 250px;
+  width: 100%;
+}
+
+/* ---- Skeleton ---- */
+.spms-sdash__skeleton-card {
+  height: 120px;
+  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 12px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

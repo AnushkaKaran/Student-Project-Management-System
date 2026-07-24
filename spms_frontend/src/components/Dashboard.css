@@ -1,0 +1,351 @@
+/* ============================================
+   SPMS Admin Dashboard — Scoped Styles
+   Prefix: spms-dashboard
+   ============================================ */
+
+.spms-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---- Header Area ---- */
+.spms-dashboard__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.spms-dashboard__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 4px 0;
+  letter-spacing: -0.02em;
+}
+
+.spms-dashboard__subtitle {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.spms-dashboard__actions {
+  display: flex;
+  gap: 12px;
+}
+
+.spms-dashboard__btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.spms-dashboard__btn--primary {
+  background: #6366f1;
+  color: white;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.25);
+}
+
+.spms-dashboard__btn--primary:hover {
+  background: #4f46e5;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
+  transform: translateY(-1px);
+}
+
+.spms-dashboard__btn--secondary {
+  background: white;
+  color: #334155;
+  border-color: #e2e8f0;
+}
+
+.spms-dashboard__btn--secondary:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+/* ---- Stat Cards Grid ---- */
+.spms-dashboard__stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.spms-dashboard__stat-card {
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.spms-dashboard__stat-card:hover {
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+  transform: translateY(-2px);
+  border-color: #e2e8f0;
+}
+
+.spms-dashboard__stat-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.spms-dashboard__stat-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.spms-dashboard__stat-label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #64748b;
+}
+
+.spms-dashboard__stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.2;
+}
+
+.spms-dashboard__stat-trend {
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.spms-dashboard__stat-trend--up { color: #10b981; }
+.spms-dashboard__stat-trend--down { color: #ef4444; }
+.spms-dashboard__stat-trend--neutral { color: #64748b; }
+
+/* ---- Layout Grids ---- */
+.spms-dashboard__grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.spms-dashboard__grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+/* ---- Card Base ---- */
+.spms-dashboard__card {
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  display: flex;
+  flex-direction: column;
+}
+
+.spms-dashboard__card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.spms-dashboard__card-title {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+}
+
+.spms-dashboard__card-action {
+  font-size: 0.8125rem;
+  color: #6366f1;
+  background: none;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+.spms-dashboard__card-action:hover {
+  text-decoration: underline;
+}
+
+/* ---- Charts ---- */
+.spms-dashboard__chart-wrapper {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  min-height: 240px;
+}
+
+/* ---- Recent Projects Table ---- */
+.spms-dashboard__table-wrapper {
+  overflow-x: auto;
+  margin: -24px;
+  margin-top: 0;
+}
+
+.spms-dashboard__table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.spms-dashboard__table th {
+  padding: 12px 24px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #64748b;
+  border-bottom: 1px solid #f1f5f9;
+  background: #f8fafc;
+}
+
+.spms-dashboard__table td {
+  padding: 16px 24px;
+  font-size: 0.875rem;
+  color: #334155;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+}
+
+.spms-dashboard__table tr:last-child td {
+  border-bottom: none;
+}
+
+.spms-dashboard__table tr:hover td {
+  background: #f8fafc;
+}
+
+.spms-dashboard__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 9999px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.spms-dashboard__badge--proposed { background: #dbeafe; color: #2563eb; }
+.spms-dashboard__badge--approved { background: #d1fae5; color: #059669; }
+.spms-dashboard__badge--rejected { background: #fee2e2; color: #dc2626; }
+.spms-dashboard__badge--default { background: #f1f5f9; color: #475569; }
+
+/* ---- Activity Timeline ---- */
+.spms-dashboard__timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.spms-dashboard__timeline-item {
+  display: flex;
+  gap: 16px;
+  position: relative;
+}
+
+.spms-dashboard__timeline-item:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 17px;
+  top: 36px;
+  bottom: -20px;
+  width: 2px;
+  background: #f1f5f9;
+}
+
+.spms-dashboard__timeline-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #64748b;
+  z-index: 1;
+}
+
+.spms-dashboard__timeline-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.spms-dashboard__timeline-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+}
+
+.spms-dashboard__timeline-desc {
+  font-size: 0.8125rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.spms-dashboard__timeline-time {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+/* ---- Loading Skeleton ---- */
+.spms-dashboard__skeleton {
+  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 1024px) {
+  .spms-dashboard__grid-3 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .spms-dashboard__grid-2,
+  .spms-dashboard__grid-3 { grid-template-columns: 1fr; }
+}

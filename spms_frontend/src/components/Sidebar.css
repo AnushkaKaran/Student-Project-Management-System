@@ -1,0 +1,469 @@
+/* ============================================
+   SPMS Sidebar — Scoped Styles
+   Prefix: spms-sidebar
+   ============================================ */
+
+/* ---- Base ---- */
+.spms-sidebar {
+  width: var(--sidebar-width);
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: linear-gradient(180deg, #0f172a 0%, #131c31 100%);
+  color: #94a3b8;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-right: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.spms-sidebar--collapsed {
+  width: var(--sidebar-collapsed);
+}
+
+/* ---- Header ---- */
+.spms-sidebar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  min-height: var(--header-height);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.spms-sidebar__logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+  min-width: 0;
+  z-index: 1;
+}
+
+.spms-sidebar__logo-icon {
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.125rem;
+  color: white;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.spms-sidebar__logo-text {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  white-space: nowrap;
+  letter-spacing: -0.02em;
+}
+
+.spms-sidebar__toggle {
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #1e293b;
+  color: #94a3b8;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  z-index: 10;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+.spms-sidebar__toggle:hover {
+  background: #334155;
+  color: #e2e8f0;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+/* The toggle remains visible when collapsed! */
+.spms-sidebar--collapsed .spms-sidebar__toggle {
+  margin-left: 12px;
+}
+
+/* ---- Section Label ---- */
+.spms-sidebar__section-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #475569;
+  padding: 20px 18px 8px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.spms-sidebar--collapsed .spms-sidebar__section-label {
+  opacity: 0;
+  height: 0;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+/* ---- Navigation ---- */
+.spms-sidebar__nav {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Custom scrollbar */
+.spms-sidebar__nav::-webkit-scrollbar {
+  width: 4px;
+}
+
+.spms-sidebar__nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.spms-sidebar__nav::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.spms-sidebar__nav::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ---- Nav Link ---- */
+.spms-sidebar__link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.18s ease;
+  border: none;
+  background: transparent;
+  width: 100%;
+  cursor: pointer;
+  text-align: left;
+  position: relative;
+  white-space: nowrap;
+  font-family: inherit;
+  line-height: 1.4;
+}
+
+.spms-sidebar__link:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #e2e8f0;
+}
+
+.spms-sidebar__link--active {
+  background: rgba(99, 102, 241, 0.12);
+  color: #f1f5f9;
+}
+
+.spms-sidebar__link--active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 55%;
+  background: linear-gradient(180deg, #6366f1 0%, #8b5cf6 100%);
+  border-radius: 0 4px 4px 0;
+}
+
+/* ---- Icon ---- */
+.spms-sidebar__icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.85;
+}
+
+.spms-sidebar__link--active .spms-sidebar__icon {
+  opacity: 1;
+  color: #818cf8;
+}
+
+/* ---- Label ---- */
+.spms-sidebar__label {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+/* ---- Chevron ---- */
+.spms-sidebar__chevron {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+/* ---- Dropdown ---- */
+.spms-sidebar__dropdown {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---- Submenu ---- */
+.spms-sidebar__submenu {
+  padding: 2px 0 4px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  overflow: hidden;
+}
+
+.spms-sidebar__sublink {
+  padding: 8px 12px 8px 46px;
+  border-radius: 6px;
+  color: #64748b;
+  text-decoration: none;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  transition: all 0.18s ease;
+  display: block;
+  position: relative;
+}
+
+.spms-sidebar__sublink::before {
+  content: '';
+  position: absolute;
+  left: 27px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.spms-sidebar__sublink:hover {
+  color: #cbd5e1;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.spms-sidebar__sublink--active {
+  color: #a5b4fc;
+  background: rgba(99, 102, 241, 0.08);
+}
+
+.spms-sidebar__sublink--active::after {
+  content: '';
+  position: absolute;
+  left: 26px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #818cf8;
+}
+
+/* ---- Footer ---- */
+.spms-sidebar__footer {
+  padding: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+}
+
+.spms-sidebar__user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.spms-sidebar__avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  color: white;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.25);
+}
+
+.spms-sidebar__user-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.spms-sidebar__user-name {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+}
+
+.spms-sidebar__user-role {
+  font-size: 0.6875rem;
+  color: #64748b;
+  text-transform: capitalize;
+  line-height: 1.3;
+}
+
+.spms-sidebar__logout {
+  width: 100%;
+  padding: 9px 12px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(239, 68, 68, 0.08);
+  color: #f87171;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: inherit;
+}
+
+.spms-sidebar__logout:hover {
+  background: rgba(239, 68, 68, 0.18);
+  color: #fca5a5;
+}
+
+/* ---- Collapsed State ---- */
+.spms-sidebar--collapsed .spms-sidebar__header {
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  justify-content: center;
+  padding: 20px 8px;
+}
+
+.spms-sidebar--collapsed .spms-sidebar__toggle {
+  margin-left: 0;
+}
+
+.spms-sidebar--collapsed .spms-sidebar__label,
+.spms-sidebar--collapsed .spms-sidebar__chevron,
+.spms-sidebar--collapsed .spms-sidebar__user-info,
+.spms-sidebar--collapsed .spms-sidebar__logo-text {
+  display: none;
+}
+
+.spms-sidebar--collapsed .spms-sidebar__nav {
+  padding: 8px 6px;
+}
+
+.spms-sidebar--collapsed .spms-sidebar__link {
+  justify-content: center;
+  padding: 10px;
+}
+
+.spms-sidebar--collapsed .spms-sidebar__user {
+  justify-content: center;
+  padding: 8px;
+}
+
+.spms-sidebar--collapsed .spms-sidebar__logout span {
+  display: none;
+}
+
+.spms-sidebar--collapsed .spms-sidebar__footer {
+  padding: 10px 6px;
+}
+
+/* ---- Collapsed Tooltip ---- */
+.spms-sidebar--collapsed .spms-sidebar__link {
+  position: relative;
+}
+
+.spms-sidebar--collapsed .spms-sidebar__link::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: #1e293b;
+  color: #f1f5f9;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  z-index: 1100;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  transform: translateY(-50%) translateX(-4px);
+}
+
+.spms-sidebar--collapsed .spms-sidebar__link:hover::after {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+/* ---- Mobile ---- */
+.spms-sidebar__backdrop {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .spms-sidebar {
+    transform: translateX(-100%);
+    box-shadow: none;
+  }
+
+  .spms-sidebar--mobile-open {
+    transform: translateX(0);
+    box-shadow: 8px 0 32px rgba(0, 0, 0, 0.3);
+  }
+
+  .spms-sidebar__backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 999;
+  }
+
+  .spms-sidebar__backdrop--visible {
+    display: block;
+  }
+}
