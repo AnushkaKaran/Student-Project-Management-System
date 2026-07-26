@@ -1,4 +1,3 @@
-# Student-Project-Management-System
 # Student Project Management System (SPMS)
 
 A full-stack web-based application designed to simplify and organize academic project management activities. The system provides a centralized platform for managing project-related information and improving collaboration between students, faculty, and administrators.
